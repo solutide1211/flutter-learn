@@ -12,9 +12,9 @@ class RouteManager {
   static Route<dynamic> generateRoute(RouteSettings setting) {
     switch (setting.name) {
       case RoutePath.HOME:
-        return pageRoute(HomePage());
+        return pageRoute(HomePage(),setting: setting);
       case RoutePath.WEB_VIEW_PAGE:
-        return pageRoute(WebViewPage());
+        return pageRoute(WebViewPage(),setting: setting);
       default:
         return pageRoute(UnkonwPage());
     }
