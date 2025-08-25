@@ -1,4 +1,6 @@
 import 'package:code01/Routes/RouteManager.dart';
+import 'package:code01/datas/home_banner_data.dart';
+import 'package:code01/pages/home/home_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 
@@ -12,6 +14,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  List<BannerItemData>? bannerList;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,21 +49,16 @@ class _HomePageState extends State<HomePage> {
       height: 200,
       //decoration: BoxDecoration(color: Colors.blue,borderRadius: BorderRadius.all(Radius.circular(10))),
       child: Swiper(
-        itemCount: 3,
+        itemCount: bannerList?.length ?? 0,
         indicatorLayout: PageIndicatorLayout.SCALE,
         itemBuilder: (context, index) {
           return Container(
             margin: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: Colors.lightBlue,
+              //color: Colors.lightBlue,
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Center(
-              child: Text(
-                "轮播图$index",
-                style: TextStyle(fontSize: 20, color: Colors.amberAccent),
-              ),
-            ),
+            child: Image.network(bannerList?[index].imagePath ?? "",fit: BoxFit.fill)
           );
         },
         autoplay: true,
@@ -151,5 +151,19 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getBannerData();
+  }
+
+  void getBannerData() async{
+    bannerList = await HomeViewModel.getBanner();
+    setState(() {
+      //虽然 setState 里是空的，但它触发了 StatefulWidget 的 build 方法重新执行，
+      // 从而让 bannerList 的新值反映到界面上。
+    });
   }
 }

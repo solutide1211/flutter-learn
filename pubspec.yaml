@@ -37,6 +37,8 @@ dependencies:
 
   flutter_swiper_view: ^1.1.8
 
+  dio: ^5.9.0
+
 
 
 dev_dependencies:
